@@ -66,34 +66,58 @@
         opacity: 0;
     }
 
-
-    .explainexpand_wrapper.expand {
-        width: 500px;
-    }
-
     .explainexpand_wrapper.expand .explain_icon{
         opacity: 1;
     }
 
     /* Default styles for mobile */
+    .explainexpand_wrapper.expand {
+        transform: translateX(-18%);
+    }
     .explainexpand_wrapper.expand .explain_icon:nth-child(2) {
-        transform: translateX(-230px) translateY(55px) rotate(5deg);
+        transform: translateX(150px) translateY(-150px) rotate(-8deg);
     }
 
     .explainexpand_wrapper.expand .explain_icon:nth-child(3) {
-        transform: translateX(-250px) translateY(-120px) rotate(-8deg);
+        transform: translateX(160px) translateY(-70px) rotate(-3deg);
     }
 
     .explainexpand_wrapper.expand .explain_icon:nth-child(4) {
-        transform: translateX(190px) translateY(65px) rotate(-3deg);
+        transform: translateX(150px) translateY(80px) rotate(8deg);
     }
 
     .explainexpand_wrapper.expand .explain_icon:nth-child(5) {
-        transform: translateX(200px) translateY(-130px) rotate(7deg);
+        transform: translateX(160px) translateY(5px) rotate(3deg);
     }
-
+    
+    /* Styles for tablet and medium screens */
+    @media (min-width: 479px) and (max-width: 991px) {
+        .explainexpand_wrapper.expand {
+            width: 500px;
+            transform: translateX(0);
+        }
+        .explainexpand_wrapper.expand .explain_icon:nth-child(2) {
+            transform: translateX(-230px) translateY(55px) rotate(5deg);
+        }
+    
+        .explainexpand_wrapper.expand .explain_icon:nth-child(3) {
+            transform: translateX(-250px) translateY(-120px) rotate(-8deg);
+        }
+    
+        .explainexpand_wrapper.expand .explain_icon:nth-child(4) {
+            transform: translateX(190px) translateY(65px) rotate(-3deg);
+        }
+    
+        .explainexpand_wrapper.expand .explain_icon:nth-child(5) {
+            transform: translateX(200px) translateY(-130px) rotate(7deg);
+        }
+    }
     /* Styles for desktop and larger screens */
     @media (min-width: 992px) {
+        .explainexpand_wrapper.expand {
+            width: 500px;
+            transform: translateX(0);
+        }
         .explainexpand_wrapper.expand .explain_icon:nth-child(2) {
             transform: translateX(-230px) translateY(-50px) rotate(5deg);
         }
@@ -125,10 +149,6 @@
         0 0 30px rgba(245, 245, 245, 0.3);
     }
 
-    .explainexpand_wrapper.expand {
-        width: 500px;
-    }
-
     .explain-card > .explain-card-border {
         content: "";
         pointer-events: none; /* Ensures the pseudo-element doesn't interfere with clicks */
@@ -140,7 +160,6 @@
         transition: opacity 500ms cubic-bezier(0.25, 1, 0.5, 1);
         width: 100%;
     }
-    
     .explain-card > .explain-card-border {
         background: radial-gradient(
         800px 400px ellipse at var(--mouse-x) var(--mouse-y),
