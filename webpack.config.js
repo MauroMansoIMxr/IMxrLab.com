@@ -1,5 +1,6 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -35,6 +36,13 @@ module.exports = {
         ]
       }
     ]
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      '...', // This syntax extends existing minimizers (i.e., `terser-webpack-plugin`)
+      new CssMinimizerPlugin()
+    ],
   },
   plugins: [
     new MiniCssExtractPlugin({
