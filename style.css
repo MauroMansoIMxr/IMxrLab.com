@@ -140,7 +140,7 @@
         transition: opacity 500ms cubic-bezier(0.25, 1, 0.5, 1);
         width: 100%;
     }
-
+    
     .explain-card > .explain-card-border {
         background: radial-gradient(
         800px 400px ellipse at var(--mouse-x) var(--mouse-y),
@@ -149,6 +149,15 @@
         );
     }
 
+    @media (min-width: 992px) {
+        .explain-card > .explain-card-border {
+            background: radial-gradient(
+            800px 400px ellipse at var(--mouse-x) var(--mouse-y),
+            rgba(255, 255, 255, 0.8),
+            transparent 40%
+            );
+        }
+    }
     .explain-card > .explain-card-content {
         height: calc(100% - 2px);
         width: calc(100% - 2px);

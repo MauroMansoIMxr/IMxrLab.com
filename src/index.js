@@ -71,9 +71,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         //Child Hover Listenner for animation in css
-
         function explainCardAnimations(breakpoint){
             const explainWrappers = document.querySelectorAll('[explain-expand_wrapper]');
+            const explaincards = document.querySelector("[explain-cards]");
+
             if (breakpoint == "desktop"){
                 explainWrappers.forEach(explainWrapper => {
                     const card = explainWrapper.querySelector('[explain-card]');
@@ -91,6 +92,21 @@ document.addEventListener("DOMContentLoaded", () => {
                     explainWrapper.classList.remove('expand');
                     });
                 });
+
+                if (explaincards) {
+                    explaincards.onmousemove = (e) => {
+                        for (const explaincard of document.querySelectorAll("[explain-card]")) {
+                            const rect = explaincard.getBoundingClientRect(),
+                            x = e.clientX - rect.left,
+                            y = e.clientY - rect.top;
+        
+                            explaincard.style.setProperty("--mouse-x", `${x}px`);
+                            explaincard.style.setProperty("--mouse-y", `${y}px`);
+                        }
+                    };
+                }else {
+                    console.error("Element with ID 'explaincard' not found");
+                }
             }else{
                 explainWrappers.forEach(explainWrapper => {
                     const card = explainWrapper.querySelector('[explain-card]');
@@ -109,8 +125,27 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                     });
                 });
+
+                if (explaincards) {
+                    document.onscroll = function(e) {
+                        for (const explaincard of document.querySelectorAll("[explain-card]")) {
+                            const centerX = window.innerWidth / 2;
+                            const centerY = window.innerHeight / 2;
+                            const rect = explaincard.getBoundingClientRect();
+                            const x = centerX - rect.left;
+                            const y = centerY - rect.top;
+                    
+                            explaincard.style.setProperty("--mouse-x", `${x}px`);
+                            explaincard.style.setProperty("--mouse-y", `${y}px`);
+                        }
+                    }; 
+                } else {
+                    console.error("Element with ID 'explaincard' not found");
+                }
             }
         }
+
+        
 
         function updateVariables(breakpoint) {
             switch (breakpoint) {
@@ -488,27 +523,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       //#endregion
   
-        //#region Explain Card listeners
-        const explaincards = document.querySelector("[explain-cards]");
-    
-        if (explaincards) {
-            explaincards.onmousemove = (e) => {
-            for (const explaincard of document.querySelectorAll("[explain-card]")) {
-                const rect = explaincard.getBoundingClientRect(),
-                x = e.clientX - rect.left,
-                y = e.clientY - rect.top;
-    
-                explaincard.style.setProperty("--mouse-x", `${x}px`);
-                explaincard.style.setProperty("--mouse-y", `${y}px`);
-            }
-            };
-        } else {
-            console.error("Element with ID 'explaincard' not found");
-        }
-        
 
-        
-        //#endregion
     } catch (error) {
       console.error("An error occurred:", error);
     }
