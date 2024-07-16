@@ -16,19 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   
         //#region Hero Scroll Animation
-        // Debugging function
-        function logProgress(progress) {
-            console.log("Scroll progress:", progress);
-        }
-    
-        function logBreakpoint(breakpoint) {
-            console.log("Current breakpoint:", breakpoint);
-        }
-    
-        function logBreakpointChange(breakpoint) {
-            console.log("Breakpoint changed to:", breakpoint);
-        }
-  
         let currentBreakpoint = "";
     
         const variables = {
@@ -52,7 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 start: `top-=${variables.offsetTop} top`,
                 end: `bottom-=${variables.endOffset} bottom`,
                 scrub: true,
-                onUpdate: (self) => logProgress(self.progress),
                 },
             })
             .to(
@@ -104,8 +90,6 @@ document.addEventListener("DOMContentLoaded", () => {
                             explaincard.style.setProperty("--mouse-y", `${y}px`);
                         }
                     };
-                }else {
-                    console.error("Element with ID 'explaincard' not found");
                 }
             }else{
                 explainWrappers.forEach(explainWrapper => {
@@ -139,8 +123,6 @@ document.addEventListener("DOMContentLoaded", () => {
                             explaincard.style.setProperty("--mouse-y", `${y}px`);
                         }
                     }; 
-                } else {
-                    console.error("Element with ID 'explaincard' not found");
                 }
             }
         }
@@ -192,7 +174,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (e.matches) {
                     if (currentBreakpoint !== breakpoint) {
                         currentBreakpoint = breakpoint;
-                        logBreakpointChange(breakpoint);
                         updateVariables(breakpoint);
                         createAnimations();
                         explainCardAnimations(breakpoint);
@@ -201,7 +182,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             if (mql.matches && currentBreakpoint !== breakpoint) {
                 currentBreakpoint = breakpoint;
-                logBreakpoint(breakpoint);
                 updateVariables(breakpoint);
                 createAnimations();
                 explainCardAnimations(breakpoint);
@@ -213,18 +193,14 @@ document.addEventListener("DOMContentLoaded", () => {
       //#endregion
   
       function openModal(event, modalType, id) {
-        console.log(`Open modal ${modalType} triggered`);
         event.preventDefault(); // Prevent default action if it is a link
   
         // Log the clicked element
         const clickedElement = event.currentTarget;
-        console.log("Clicked element:", clickedElement);
-        console.log("Clicked id:", id);
   
         let clickedName = clickedElement.getAttribute(
           `${modalType.toLowerCase()}link_name`,
         );
-        console.log("Clicked Item name:", clickedName);
   
         const cmsFilter = document.querySelector(
           `[Modal_Wrapper='${modalType}']`,
@@ -232,11 +208,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const cmsFilterItems = cmsFilter.querySelectorAll(
           `[${modalType}_CollectionItem]`,
         );
-        console.log("cmsFilterItems:", cmsFilterItems);
   
         cmsFilterItems.forEach((item) => {
           const name = item.getAttribute("itemname");
-          console.log("Item", item, "Name:", name);
   
           if (name === clickedName) {
             item.style.display = "flex";
@@ -270,7 +244,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   
       function closeModal(event) {
-        console.log("Close modal triggered");
         event.preventDefault(); // Prevent default action if it is a link
   
         gsap.to("[Modal_Wrapper]", {
@@ -293,10 +266,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   
       function scrollTo(event, section) {
-        console.log(
-          "Scroll Down triggered for section: ",
-          section.getAttribute("wb-section"),
-        );
         event.preventDefault(); // Prevent default action if it is a link
         lenis.scrollTo(section, {
           duration: 2, // Duration in seconds
@@ -332,13 +301,10 @@ document.addEventListener("DOMContentLoaded", () => {
           const targetSection = Array.from(sections).find(
             (section) => section.getAttribute("wb-section") === linkName,
           );
-          console.log("targetSection:", targetSection);
   
           if (targetSection) {
             // Scroll to the matching section
             scrollTo(event, targetSection);
-          } else {
-            console.error(`Section with wb-section='${linkName}' not found`);
           }
         });
       }
@@ -354,22 +320,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const EstruturaSection = document.querySelector("[wb-section='Estrutura']");
       const SolucoesSection = document.querySelector("[wb-section='Solucoes']");
   
-      console.log("wb-sections:", sections);
-      console.log("wb-section='Navbar'", NavBarSection);
-      console.log("wb-section='Partner':", SectionPartner);
-      console.log("wb-section='Hero':", HeroSection);
-      console.log("wb-section='Expertise_Title'", ExpertiseSection);
-      console.log("wb-section='Estrutura:", EstruturaSection);
-      console.log("wb-section='Solucoes':", SolucoesSection);
-  
       // Nav BG Declaring
       const navBG = document.querySelector("[wb-background='nav_BG']");
-      console.log("navBG:", navBG);
   
       if (navBG && HeroSection) {
         revealNavBG();
-      } else {
-        console.error("wb-section=Hero or wb-background='nav_BG' not found");
       }
       //#endregion
   
@@ -383,8 +338,6 @@ document.addEventListener("DOMContentLoaded", () => {
           const linkName = Link.getAttribute("wb-textfx-menu");
           navLinkTo(Link, linkName);
         });
-      } else {
-        console.error("wb-textfx-menu: not found");
       }
   
       if (NavLinks.length > 0) {
@@ -392,8 +345,6 @@ document.addEventListener("DOMContentLoaded", () => {
           const linkName = Link.getAttribute("wb-nav-link");
           navLinkTo(Link, linkName);
         });
-      } else {
-        console.error("wb-nav-link: not found");
       }
   
       const FooterLinks = document.querySelectorAll("[FooterLink]");
@@ -403,8 +354,6 @@ document.addEventListener("DOMContentLoaded", () => {
           const linkName = Link.getAttribute("FooterLink");
           navLinkTo(Link, linkName);
         });
-      } else {
-        console.error("wb-textfx-menu: not found");
       }
       //#endregion
   
@@ -412,7 +361,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const contatoUrl = "https://wa.me/message/ED5PWGKO3JGEB1";
   
       const contatoLink = document.querySelectorAll("[contatoLink]");
-      console.log("contatoLink:", contatoLink);
   
       if (contatoLink) {
         contatoLink.forEach((Link) => {
@@ -423,34 +371,26 @@ document.addEventListener("DOMContentLoaded", () => {
             }
           });
         });
-      } else {
-        console.error("[contatoLink] not found");
       }
       //#endregion
   
       //#region Scroll Down Hero link Event listener
       const scrollDownLink = document.querySelector("[ScrollDownLink]");
-      console.log("scrollDownLink:", scrollDownLink);
   
       if (scrollDownLink) {
         scrollDownLink.addEventListener("click", (event) =>
           scrollTo(event, SectionPartner),
         );
-      } else {
-        console.error("[ScrollDownLink] not found");
       }
       //#endregion
   
       //#region Scroll Up Footer Logo Event listener
       const FooterLogo = document.querySelector("[Footer_Link='Logo']");
-      console.log("Footer_Link='Logo':", scrollDownLink);
   
       if (FooterLogo && HeroSection) {
         FooterLogo.addEventListener("click", (event) =>
           scrollTo(event, HeroSection),
         );
-      } else {
-        console.error("[FooterLogo] not found");
       }
       //#endregion
   
@@ -465,37 +405,24 @@ document.addEventListener("DOMContentLoaded", () => {
         );
         const backLink = document.querySelector(`[BackModalLink='${modalType}']`);
   
-        console.log(`${modalType} Links:`, modalLinks);
-        console.log(`${modalType} modalCover:`, modalCover);
-        console.log(`${modalType} closeLink:`, closeLink);
-        console.log(`${modalType} backLink:`, backLink);
-  
         if (modalLinks.length > 0) {
           modalLinks.forEach((link, index) => {
             link.addEventListener("click", (event) =>
               openModal(event, modalType, index),
             );
           });
-        } else {
-          console.error(`[OpenModalLink='${modalType}'] not found`);
         }
   
         if (modalCover) {
           modalCover.addEventListener("click", closeModal);
-        } else {
-          console.error(`ModalCover='${modalType}' not found`);
         }
   
         if (closeLink) {
           closeLink.addEventListener("click", closeModal);
-        } else {
-          console.error(`CloseModalLink='${modalType}' not found`);
         }
   
         if (backLink) {
           backLink.addEventListener("click", closeModal);
-        } else {
-          console.error(`BackModal_Link='${modalType}' not found`);
         }
       }
   
@@ -518,8 +445,6 @@ document.addEventListener("DOMContentLoaded", () => {
             card.style.setProperty("--mouse-y", `${y}px`);
           }
         };
-      } else {
-        console.error("Element with ID 'card' not found");
       }
       //#endregion
   
