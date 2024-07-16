@@ -3,14 +3,31 @@ import '../style.css';
 // Ensure document is ready
 document.addEventListener("DOMContentLoaded", () => {
     try {
-      console.log("Document is ready, 'script.js' from sandbox Loaded! UPDATE");
-      // Initialize the elements
+      //#region Log State
+      const shouldLog = false;
+      
+      function logMessage(...args){
+        if (shouldLog  == true){
+          console.log(...args);
+        }
+      }
+
+      function logErrorMessage(...args){
+        if (shouldLog  == true){
+          console.error(...args);
+        }
+      }
+      //#endregion
+
+      logMessage("Document is ready, 'global.js' Loaded!");
+
+      // Register GSAP Scroll Trigger
       gsap.registerPlugin(ScrollTrigger);
   
       //#region Initialize Modal Close
       gsap.set("[Modal_Container]", { display: "none" });
       //#endregion
-  
+
       function easeOutQuad(x) {
         return 1 - (1 - x) * (1 - x);
       }
@@ -18,15 +35,15 @@ document.addEventListener("DOMContentLoaded", () => {
         //#region Hero Scroll Animation
         // Debugging function
         function logProgress(progress) {
-            console.log("Scroll progress:", progress);
+          logMessage("Scroll progress msm:", progress);
         }
     
         function logBreakpoint(breakpoint) {
-            console.log("Current breakpoint:", breakpoint);
+          logMessage("Current breakpoint:", breakpoint);
         }
     
         function logBreakpointChange(breakpoint) {
-            console.log("Breakpoint changed to:", breakpoint);
+            logMessage("Breakpoint changed to:", breakpoint);
         }
   
         let currentBreakpoint = "";
@@ -80,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const card = explainWrapper.querySelector('[explain-card]');
         
                     if (!card) {
-                    console.error('Card not found');
+                      logErrorMessage('Card not found');
                     return;
                     }
         
@@ -105,14 +122,14 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     };
                 }else {
-                    console.error("Element with ID 'explaincard' not found");
+                  logErrorMessage("Element with ID 'explaincard' not found");
                 }
             }else{
                 explainWrappers.forEach(explainWrapper => {
                     const card = explainWrapper.querySelector('[explain-card]');
         
                     if (!card) {
-                    console.error('Card not found');
+                      logErrorMessage('Card not found');
                     return;
                     }
         
@@ -140,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     }; 
                 } else {
-                    console.error("Element with ID 'explaincard' not found");
+                  logErrorMessage("Element with ID 'explaincard' not found");
                 }
             }
         }
@@ -213,18 +230,18 @@ document.addEventListener("DOMContentLoaded", () => {
       //#endregion
   
       function openModal(event, modalType, id) {
-        console.log(`Open modal ${modalType} triggered`);
+        logMessage(`Open modal ${modalType} triggered`);
         event.preventDefault(); // Prevent default action if it is a link
   
         // Log the clicked element
         const clickedElement = event.currentTarget;
-        console.log("Clicked element:", clickedElement);
-        console.log("Clicked id:", id);
+        logMessage("Clicked element:", clickedElement);
+        logMessage("Clicked id:", id);
   
         let clickedName = clickedElement.getAttribute(
           `${modalType.toLowerCase()}link_name`,
         );
-        console.log("Clicked Item name:", clickedName);
+        logMessage("Clicked Item name:", clickedName);
   
         const cmsFilter = document.querySelector(
           `[Modal_Wrapper='${modalType}']`,
@@ -232,11 +249,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const cmsFilterItems = cmsFilter.querySelectorAll(
           `[${modalType}_CollectionItem]`,
         );
-        console.log("cmsFilterItems:", cmsFilterItems);
+        logMessage("cmsFilterItems:", cmsFilterItems);
   
         cmsFilterItems.forEach((item) => {
           const name = item.getAttribute("itemname");
-          console.log("Item", item, "Name:", name);
+          logMessage("Item", item, "Name:", name);
   
           if (name === clickedName) {
             item.style.display = "flex";
@@ -251,8 +268,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         gsap.set(`[Modal_Wrapper='${modalType}']`, {
           //top: "100vh",
-          rotationX: 90,
-          transformPerspective: 2500,
+          //rotationX: 90,
+          //transformPerspective: 2500,
           transformOrigin: "center center",
         });
   
@@ -264,18 +281,18 @@ document.addEventListener("DOMContentLoaded", () => {
         gsap.to(`[Modal_Wrapper='${modalType}']`, {
           //top: "0vh",
           duration: 0.5,
-          rotationX: 0,
+          //rotationX: 0,
           ease: "power1.out",
         });
       }
   
       function closeModal(event) {
-        console.log("Close modal triggered");
+        logMessage("Close modal triggered");
         event.preventDefault(); // Prevent default action if it is a link
   
         gsap.to("[Modal_Wrapper]", {
           //top: "100vh",
-          rotationX: 90,
+          //rotationX: 90,
           duration: 0.4,
           ease: "power1.out",
         });
@@ -293,7 +310,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   
       function scrollTo(event, section) {
-        console.log(
+        logMessage(
           "Scroll Down triggered for section: ",
           section.getAttribute("wb-section"),
         );
@@ -332,13 +349,13 @@ document.addEventListener("DOMContentLoaded", () => {
           const targetSection = Array.from(sections).find(
             (section) => section.getAttribute("wb-section") === linkName,
           );
-          console.log("targetSection:", targetSection);
+          logMessage("targetSection:", targetSection);
   
           if (targetSection) {
             // Scroll to the matching section
             scrollTo(event, targetSection);
           } else {
-            console.error(`Section with wb-section='${linkName}' not found`);
+            logErrorMessage(`Section with wb-section='${linkName}' not found`);
           }
         });
       }
@@ -354,22 +371,22 @@ document.addEventListener("DOMContentLoaded", () => {
       const EstruturaSection = document.querySelector("[wb-section='Estrutura']");
       const SolucoesSection = document.querySelector("[wb-section='Solucoes']");
   
-      console.log("wb-sections:", sections);
-      console.log("wb-section='Navbar'", NavBarSection);
-      console.log("wb-section='Partner':", SectionPartner);
-      console.log("wb-section='Hero':", HeroSection);
-      console.log("wb-section='Expertise_Title'", ExpertiseSection);
-      console.log("wb-section='Estrutura:", EstruturaSection);
-      console.log("wb-section='Solucoes':", SolucoesSection);
+      logMessage("wb-sections:", sections);
+      logMessage("wb-section='Navbar'", NavBarSection);
+      logMessage("wb-section='Partner':", SectionPartner);
+      logMessage("wb-section='Hero':", HeroSection);
+      logMessage("wb-section='Expertise_Title'", ExpertiseSection);
+      logMessage("wb-section='Estrutura:", EstruturaSection);
+      logMessage("wb-section='Solucoes':", SolucoesSection);
   
       // Nav BG Declaring
       const navBG = document.querySelector("[wb-background='nav_BG']");
-      console.log("navBG:", navBG);
+      logMessage("navBG:", navBG);
   
       if (navBG && HeroSection) {
         revealNavBG();
       } else {
-        console.error("wb-section=Hero or wb-background='nav_BG' not found");
+        logErrorMessage("wb-section=Hero or wb-background='nav_BG' not found");
       }
       //#endregion
   
@@ -384,7 +401,7 @@ document.addEventListener("DOMContentLoaded", () => {
           navLinkTo(Link, linkName);
         });
       } else {
-        console.error("wb-textfx-menu: not found");
+        logErrorMessage("wb-textfx-menu: not found");
       }
   
       if (NavLinks.length > 0) {
@@ -393,7 +410,7 @@ document.addEventListener("DOMContentLoaded", () => {
           navLinkTo(Link, linkName);
         });
       } else {
-        console.error("wb-nav-link: not found");
+        logErrorMessage("wb-nav-link: not found");
       }
   
       const FooterLinks = document.querySelectorAll("[FooterLink]");
@@ -404,7 +421,7 @@ document.addEventListener("DOMContentLoaded", () => {
           navLinkTo(Link, linkName);
         });
       } else {
-        console.error("wb-textfx-menu: not found");
+        logErrorMessage("wb-textfx-menu: not found");
       }
       //#endregion
   
@@ -412,7 +429,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const contatoUrl = "https://wa.me/message/ED5PWGKO3JGEB1";
   
       const contatoLink = document.querySelectorAll("[contatoLink]");
-      console.log("contatoLink:", contatoLink);
+      logErrorMessage("contatoLink:", contatoLink);
   
       if (contatoLink) {
         contatoLink.forEach((Link) => {
@@ -424,33 +441,33 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         });
       } else {
-        console.error("[contatoLink] not found");
+        logErrorMessage("[contatoLink] not found");
       }
       //#endregion
   
       //#region Scroll Down Hero link Event listener
       const scrollDownLink = document.querySelector("[ScrollDownLink]");
-      console.log("scrollDownLink:", scrollDownLink);
+      logErrorMessage("scrollDownLink:", scrollDownLink);
   
       if (scrollDownLink) {
         scrollDownLink.addEventListener("click", (event) =>
           scrollTo(event, SectionPartner),
         );
       } else {
-        console.error("[ScrollDownLink] not found");
+        logErrorMessage("[ScrollDownLink] not found");
       }
       //#endregion
   
       //#region Scroll Up Footer Logo Event listener
       const FooterLogo = document.querySelector("[Footer_Link='Logo']");
-      console.log("Footer_Link='Logo':", scrollDownLink);
+      logMessage("Footer_Link='Logo':", scrollDownLink);
   
       if (FooterLogo && HeroSection) {
         FooterLogo.addEventListener("click", (event) =>
           scrollTo(event, HeroSection),
         );
       } else {
-        console.error("[FooterLogo] not found");
+        logErrorMessage("[FooterLogo] not found");
       }
       //#endregion
   
@@ -465,10 +482,10 @@ document.addEventListener("DOMContentLoaded", () => {
         );
         const backLink = document.querySelector(`[BackModalLink='${modalType}']`);
   
-        console.log(`${modalType} Links:`, modalLinks);
-        console.log(`${modalType} modalCover:`, modalCover);
-        console.log(`${modalType} closeLink:`, closeLink);
-        console.log(`${modalType} backLink:`, backLink);
+        logMessage(`${modalType} Links:`, modalLinks);
+        logMessage(`${modalType} modalCover:`, modalCover);
+        logMessage(`${modalType} closeLink:`, closeLink);
+        logMessage(`${modalType} backLink:`, backLink);
   
         if (modalLinks.length > 0) {
           modalLinks.forEach((link, index) => {
@@ -477,25 +494,25 @@ document.addEventListener("DOMContentLoaded", () => {
             );
           });
         } else {
-          console.error(`[OpenModalLink='${modalType}'] not found`);
+          logErrorMessage(`[OpenModalLink='${modalType}'] not found`);
         }
   
         if (modalCover) {
           modalCover.addEventListener("click", closeModal);
         } else {
-          console.error(`ModalCover='${modalType}' not found`);
+          logErrorMessage(`ModalCover='${modalType}' not found`);
         }
   
         if (closeLink) {
           closeLink.addEventListener("click", closeModal);
         } else {
-          console.error(`CloseModalLink='${modalType}' not found`);
+          logErrorMessage(`CloseModalLink='${modalType}' not found`);
         }
   
         if (backLink) {
           backLink.addEventListener("click", closeModal);
         } else {
-          console.error(`BackModal_Link='${modalType}' not found`);
+          logErrorMessage(`BackModal_Link='${modalType}' not found`);
         }
       }
   
@@ -519,7 +536,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         };
       } else {
-        console.error("Element with ID 'card' not found");
+        logErrorMessage("Element with ID 'card' not found");
       }
       //#endregion
   
