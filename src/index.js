@@ -268,8 +268,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         gsap.set(`[Modal_Wrapper='${modalType}']`, {
           //top: "100vh",
-          //rotationX: 90,
-          //transformPerspective: 2500,
+          rotationX: 90,
+          transformPerspective: 2500,
           transformOrigin: "center center",
         });
   
@@ -281,7 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
         gsap.to(`[Modal_Wrapper='${modalType}']`, {
           //top: "0vh",
           duration: 0.5,
-          //rotationX: 0,
+          rotationX: 0,
           ease: "power1.out",
         });
       }
@@ -292,7 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
         gsap.to("[Modal_Wrapper]", {
           //top: "100vh",
-          //rotationX: 90,
+          rotationX: 90,
           duration: 0.4,
           ease: "power1.out",
         });
