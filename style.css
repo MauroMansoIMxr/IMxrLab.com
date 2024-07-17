@@ -1,3 +1,9 @@
+/* #region Link Hover Overwrite  */
+    a:hover, a.w--current{
+        color: var(--white);
+    }
+/* #endregion */
+
 /* #region Cards Hover FX */
 
     #cards:hover .card .card-border {
@@ -211,4 +217,44 @@
     }
 
 /* #endregion */
-  
+
+/* #region Card Hover Effect */
+    [logo-move_hover]  {
+        transition: transform 400ms cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    
+    [Footer_Link="Logo"]:hover [logo-move_hover] {
+        transform: translateX(10px) translateY(-10px);
+    }
+
+/* #endregion */
+
+/* #region Move Fill on Hover */
+
+    
+
+    /* Pseudo-element for the hover effect */
+    [move-fill_onhover]::before {
+        content: attr(data-text); /* Repeats the text content */
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: var(--white);
+        -webkit-text-stroke: 0px; /* No stroke */
+        opacity: 0;
+        transition: 
+        transform 400ms cubic-bezier(0.25, 1, 0.5, 1), 
+        opacity 400ms cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    
+    [move-fill_onhover]:hover {
+        color: transparent;
+    }
+
+    /* Hover effect */
+    [move-fill_onhover]:hover::before {
+        opacity: 1;
+        transform: translate(10px, -10px); /* Moves the text */
+    }
+
+/* #endregion */
