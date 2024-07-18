@@ -230,9 +230,6 @@
 /* #endregion */
 
 /* #region Move Fill on Hover */
-
-    
-
     /* Pseudo-element for the hover effect */
     [move-fill_onhover]::before {
         content: attr(data-text); /* Repeats the text content */

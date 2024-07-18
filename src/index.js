@@ -17,9 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
           console.error(...args);
         }
       }
-      //#endregion
 
       logMessage("Document is ready, 'global.js' Loaded!");
+      //#endregion
 
       // Register GSAP Scroll Trigger
       gsap.registerPlugin(ScrollTrigger);
